@@ -1,2 +1,2 @@
 # JS_ROBO_GADGET
-Programming Iot with Javascript
+Programming IoT with Javascript
