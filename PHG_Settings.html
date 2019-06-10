@@ -1,0 +1,508 @@
+    <!DOCTYPE html><head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+    .PHG_display {
+        width: 100%;
+        height: 20%;
+    }
+    .PHG_Control {
+        width: 100%;
+        height: 80%;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          text-align: center;       
+    }
+    /* If you want the content centered horizontally and vertically */
+    .centered {
+    /*      position: absolute;*/
+          top: 50%;
+          left: 50%;
+    /*      transform: translate(-50%, -50%);*/
+          text-align: center;
+    }
+    </style>
+    </head>
+    <body><title>PHG Settings</title>
+    <div style=" float:right; ">
+			<a href="./PHG_Game.html">Joystick</a>
+    </div>
+    <div class='PHG_display'>
+	</div>
+    <div class='PHG_Control'> 
+    <div class='left'>  
+		<p>Set New Wifi Robot Number: 
+			<input id='idtxSetRobNo' type='text'  size='3' value='0' onchange='fsetRobNo(this.value)'>
+		</p> 
+    <table>
+    <tr>
+      <th>Axis</th>
+      <th>Min Pos</th>
+      <th>Min Deg</th>
+      <th>Zero Pos</th>
+      <th>High Pos</th>
+	  <th>High Deg</th>
+      <th>Act Pog</th>
+	  <th>Adjust</th>
+	 </tr>
+    <tr>
+  	  <td>
+       <output id='idtxtA1' name='txtA1' >A1</output>
+      </td> <td>
+      <output id='idminPosA1' name='minPosA1' >150</output>
+      <input id='idtxSetLowA1' type='text'  size='3' value='0' onchange='fsetLowA(1,this.value)'>
+      </td> <td>
+      <output id='idminDegA1' name='minDegA1' >-90</output>
+      <input id='idtxSetLowDA1' type='text'  size='3' value='0' onchange='fsetLowDA(1,this.value)'>
+      </td> <td>
+      <output id='idzeroPosA1' name='zeroPosA1' >350</output>
+      <input id='idtxSetZeroA1' type='text'  size='3' value='0' onchange='fsetZeroA(1,this.value)'>
+      </td> <td>
+      <output id='idmaxPosA1' name='maxPosA1' >500</output>
+      <input id='idtxSetMaxA1' type='text'  size='3' value='0' onchange='fsetMaxA(1,this.value)'>
+      </td>	 <td>
+      <output id='idmaxDegA1' name='maxDegA1' >90</output>
+      <input id='idtxSetMaxDA1' type='text'  size='3' value='0' onchange='fsetMaxDA(1,this.value)'>
+      </td>	 <td>
+      <output id='idactPosA1' name='actPosA1' >300</output>
+      <input id='idtxSetActA1' type='text'  size='3' value='0' onchange='fsetActA(1,this.value)'>
+      </td>	 <td>
+      <input id='idbtJogA1m' type='button' value='A1 -' onmousedown='fJogA1m()'>
+      <input id='idbtJogA1p' type='button' value='+ A1' onclick='fJogA1p()'>
+      <input id='idbtRactA1' type='button' value='Read Actual' onmousedown='floadAct(1)'>
+     </td>
+	</tr> 
+    <tr>
+  	  <td>
+       <output id='idtxtA2' name='txtA2' >A2</output>
+      </td> <td>
+      <output id='idminPosA2' name='minPosA2' >150</output>
+      <input id='idtxSetLowA2' type='text'  size='3' value='0' onchange='fsetLowA(2,this.value)'>
+      </td> <td>
+      <output id='idminDegA2' name='minDegA2' >-90</output>
+      <input id='idtxSetLowDA2' type='text'  size='3' value='0' onchange='fsetLowDA(2,this.value)'>
+      </td> <td>
+      <output id='idzeroPosA2' name='zeroPosA2' >350</output>
+      <input id='idtxSetZeroA2' type='text'  size='3' value='0' onchange='fsetZeroA(2,this.value)'>
+      </td> <td>
+      <output id='idmaxPosA2' name='maxPosA2' >500</output>
+      <input id='idtxSetMaxA2' type='text'  size='3' value='0' onchange='fsetMaxA(2,this.value)'>
+      </td>	 <td>
+      <output id='idmaxDegA2' name='maxDegA2' >90</output>
+      <input id='idtxSetMaxDA2' type='text'  size='3' value='0' onchange='fsetMaxDA(2,this.value)'>
+      </td>	 <td>
+      <output id='idactPosA2' name='actPosA2' >300</output>
+      <input id='idtxSetActA2' type='text'  size='3' value='0' onchange='fsetActA(2,this.value)'>
+      </td>	 <td>
+      <input id='idbtJogA2m' type='button' value='A2 -' onmousedown='fJogA2m()'>
+      <input id='idbtJogA2p' type='button' value='+ A2' onclick='fJogA2p()'>
+      <input id='idbtRactA2' type='button' value='Read Actual' onmousedown='floadAct(2)'>
+     </td>
+	 </tr> 
+    <tr>
+  	  <td>
+       <output id='idtxtA3' name='txtA3' >A3</output>
+      </td> <td>
+      <output id='idminPosA3' name='minPosA3' >150</output>
+      <input id='idtxSetLowA3' type='text'  size='3' value='0' onchange='fsetLowA(3,this.value)'>
+      </td> <td>
+      <output id='idminDegA3' name='minDegA3' >-90</output>
+      <input id='idtxSetLowDA3' type='text'  size='3' value='0' onchange='fsetLowDA(3,this.value)'>
+      </td> <td>
+      <output id='idzeroPosA3' name='zeroPosA3' >350</output>
+      <input id='idtxSetZeroA3' type='text'  size='3' value='0' onchange='fsetZeroA(3,this.value)'>
+      </td> <td>
+      <output id='idmaxPosA3' name='maxPosA3' >500</output>
+      <input id='idtxSetMaxA3' type='text'  size='3' value='0' onchange='fsetMaxA(3,this.value)'>
+      </td>	 <td>
+      <output id='idmaxDegA3' name='maxDegA3' >90</output>
+      <input id='idtxSetMaxDA3' type='text'  size='3' value='0' onchange='fsetMaxDA(3,this.value)'>
+      </td>	 <td>
+      <output id='idactPosA3' name='actPosA3' >300</output>
+      <input id='idtxSetActA3' type='text'  size='3' value='0' onchange='fsetActA(3,this.value)'>
+      </td>	 <td>
+      <input id='idbtJogA3m' type='button' value='A3 -' onmousedown='fJogA3m()'>
+      <input id='idbtJogA3p' type='button' value='+ A3' onclick='fJogA3p()'>
+      <input id='idbtRactA3' type='button' value='Read Actual' onmousedown='floadAct(3)'>
+     </td>
+	 </tr> 
+    <tr>
+  	  <td>
+       <output id='idtxtA4' name='txtA4' >A4</output>
+      </td> <td>
+      <output id='idminPosA4' name='minPosA4' >150</output>
+      <input id='idtxSetLowA4' type='text'  size='3' value='0' onchange='fsetLowA(4,this.value)'>
+      </td> <td>
+      <output id='idminDegA4' name='minDegA4' >-90</output>
+      <input id='idtxSetLowDA4' type='text'  size='3' value='0' onchange='fsetLowDA(4,this.value)'>
+      </td> <td>
+      <output id='idzeroPosA4' name='zeroPosA4' >350</output>
+      <input id='idtxSetZeroA4' type='text'  size='3' value='0' onchange='fsetZeroA(4,this.value)'>
+      </td> <td>
+      <output id='idmaxPosA4' name='maxPosA4' >500</output>
+      <input id='idtxSetMaxA4' type='text'  size='3' value='0' onchange='fsetMaxA(4,this.value)'>
+      </td>	 <td>
+      <output id='idmaxDegA4' name='maxDegA4' >90</output>
+      <input id='idtxSetMaxDA4' type='text'  size='3' value='0' onchange='fsetMaxDA(4,this.value)'>
+      </td>	 <td>
+      <output id='idactPosA4' name='actPosA4' >300</output>
+      <input id='idtxSetActA4' type='text'  size='3' value='0' onchange='fsetActA(4,this.value)'>
+      </td>	 <td>
+      <input id='idbtJogA4m' type='button' value='A4 -' onmousedown='fJogA4m()'>
+      <input id='idbtJogA4p' type='button' value='+ A4' onclick='fJogA4p()'>
+      <input id='idbtRactA4' type='button' value='Read Actual' onmousedown='floadAct(4)'>
+      </td>
+	 </tr> 
+    <tr>
+  	  <td>
+       <output id='idtxtA5' name='txtA5' >A5</output>
+      </td> <td>
+      <output id='idminPosA5' name='minPosA5' >150</output>
+      <input id='idtxSetLowA5' type='text'  size='3' value='0' onchange='fsetLowA(5,this.value)'>
+      </td> <td>
+      <output id='idminDegA5' name='minDegA5' >-90</output>
+      <input id='idtxSetLowDA5' type='text'  size='3' value='0' onchange='fsetLowDA(5,this.value)'>
+      </td> <td>
+      <output id='idzeroPosA5' name='zeroPosA5' >350</output>
+      <input id='idtxSetZeroA5' type='text'  size='3' value='0' onchange='fsetZeroA(5,this.value)'>
+      </td> <td>
+      <output id='idmaxPosA5' name='maxPosA5' >500</output>
+      <input id='idtxSetMaxA5' type='text'  size='3' value='0' onchange='fsetMaxA(5,this.value)'>
+      </td>	 <td>
+      <output id='idmaxDegA5' name='maxDegA5' >90</output>
+      <input id='idtxSetMaxDA5' type='text'  size='3' value='0' onchange='fsetMaxDA(5,this.value)'>
+      </td>	 <td>
+      <output id='idactPosA5' name='actPosA5' >300</output>
+      <input id='idtxSetActA5' type='text'  size='3' value='0' onchange='fsetActA(5,this.value)'>
+      </td>	 <td>
+      <input id='idbtJogA5m' type='button' value='A5 -' onmousedown='fJogA5m()'>
+      <input id='idbtJogA5p' type='button' value='+ A5' onclick='fJogA5p()'>
+      <input id='idbtRactA5' type='button' value='Read Actual' onmousedown='floadAct(5)'>
+      </td>
+	 </tr> 
+    <tr>
+  	  <td>
+       <output id='idtxtA6' name='txtA6' >A6</output>
+      </td> <td>
+      <output id='idminPosA6' name='minPosA6' >150</output>
+      <input id='idtxSetLowA6' type='text'  size='3' value='0' onchange='fsetLowA(6,this.value)'>
+      </td> <td>
+      <output id='idminDegA6' name='minDegA6' >-90</output>
+      <input id='idtxSetLowDA6' type='text'  size='3' value='0' onchange='fsetLowDA(6,this.value)'>
+      </td> <td>
+      <output id='idzeroPosA6' name='zeroPosA6' >350</output>
+      <input id='idtxSetZeroA6' type='text'  size='3' value='0' onchange='fsetZeroA(6,this.value)'>
+      </td> <td>
+      <output id='idmaxPosA6' name='maxPosA6' >500</output>
+      <input id='idtxSetMaxA6' type='text'  size='3' value='0' onchange='fsetMaxA(6,this.value)'>
+      </td>	 <td>
+      <output id='idmaxDegA6' name='maxDegA6' >90</output>
+      <input id='idtxSetMaxDA6' type='text'  size='3' value='0' onchange='fsetMaxDA(6,this.value)'>
+      </td>	 <td>
+      <output id='idactPosA6' name='actPosA6' >300</output>
+      <input id='idtxSetActA6' type='text'  size='3' value='0' onchange='fsetActA(6,this.value)'>
+      </td>	 <td>
+      <input id='idbtJogA6m' type='button' value='A6 -' onmousedown='fJogA6m()'>
+      <input id='idbtJogA6p' type='button' value='+ A6' onclick='fJogA6p()'>
+      <input id='idbtRactA6' type='button' value='Read Actual' onmousedown='floadAct(6)'>
+      </td>
+	 </tr> 
+      <br><br>
+    <tr>
+  	  <td colspan='2'>
+      <input id='idbtldef' type='button'  value='Load Default' onmousedown='floadDef()'>
+      </td>
+  	  <td colspan='2'>
+      <input id='idbtsnew' type='button' value='Save New' onmousedown='fSaveNew()'>
+      </td>
+  	  <td colspan='2'>
+      <input id='idbCalExit' type='button' value='Exit' onmousedown='fCalExit()'>
+      </td>
+	 </tr> 
+      </table>
+  
+  </div></div>
+   <div>V51</div>
+    <script>
+	//===============================================================	
+    var Socket;
+	//===============================================================	
+    var viA1,viA2,viA3,viA4,viA5,viA6,viMode,viMoti,viStep,viVel,
+        viJ1,viJ2,viJ3,viJ4,viJ5,viJ6   ;
+	//===============================================================	
+        window.onload = Init1();
+	//===============================================================	
+        function Init1() {
+//            Socket = new WebSocket('ws://' + window.location.hostname + ':81/');
+            Socket = new WebSocket('ws://192.168.4.1:81/');
+            Socket.onmessage = function(event) {
+                //create a JSON object
+                var IstRobstr = event.data;
+                console.log("Receive: " + event.data);
+                var obj = JSON.parse(IstRobstr);
+//                if (obj.hasOwnProperty("Cal")) {;
+                        if (obj.hasOwnProperty("A1mP")) {
+						    document.getElementById('idtxSetLowA1').value = obj.A1mP; 
+						    document.getElementById('idtxSetZeroA1').value = obj.A1zP; 
+						    document.getElementById('idtxSetMaxA1').value = obj.A1xP; 
+						    document.getElementById('idtxSetLowDA1').value = obj.A1mD; 
+						    document.getElementById('idtxSetMaxDA1').value = obj.A1xD; 
+							
+						    document.getElementById('idminPosA1').value = obj.A1mP; 
+						    document.getElementById('idzeroPosA1').value = obj.A1zP; 
+						    document.getElementById('idmaxPosA1').value = obj.A1xP; 
+						    document.getElementById('idminDegA1').value = obj.A1mD; 
+						    document.getElementById('idmaxDegA1').value = obj.A1xD; 
+                        };
+                        if (obj.hasOwnProperty("A2mP")) {
+						    document.getElementById('idtxSetLowA2').value = obj.A2mP; 
+						    document.getElementById('idtxSetZeroA2').value = obj.A2zP; 
+						    document.getElementById('idtxSetMaxA2').value = obj.A2xP; 
+						    document.getElementById('idtxSetLowDA2').value = obj.A2mD; 
+						    document.getElementById('idtxSetMaxDA2').value = obj.A2xD; 
+							
+						    document.getElementById('idminPosA2').value = obj.A2mP; 
+						    document.getElementById('idzeroPosA2').value = obj.A2zP; 
+						    document.getElementById('idmaxPosA2').value = obj.A2xP; 
+						    document.getElementById('idminDegA2').value = obj.A2mD; 
+						    document.getElementById('idmaxDegA2').value = obj.A2xD; 
+                        };
+                        if (obj.hasOwnProperty("A3mP")) {
+						    document.getElementById('idtxSetLowA3').value = obj.A3mP; 
+						    document.getElementById('idtxSetZeroA3').value = obj.A3zP; 
+						    document.getElementById('idtxSetMaxA3').value = obj.A3xP; 
+						    document.getElementById('idtxSetLowDA3').value = obj.A3mD; 
+						    document.getElementById('idtxSetMaxDA3').value = obj.A3xD; 
+							
+						    document.getElementById('idminPosA3').value = obj.A3mP; 
+						    document.getElementById('idzeroPosA3').value = obj.A3zP; 
+						    document.getElementById('idmaxPosA3').value = obj.A3xP; 
+						    document.getElementById('idminDegA3').value = obj.A3mD; 
+						    document.getElementById('idmaxDegA3').value = obj.A3xD; 
+                        };
+                        if (obj.hasOwnProperty("A4mP")) {
+						    document.getElementById('idtxSetLowA4').value = obj.A4mP; 
+						    document.getElementById('idtxSetZeroA4').value = obj.A4zP; 
+						    document.getElementById('idtxSetMaxA4').value = obj.A4xP; 
+						    document.getElementById('idtxSetLowDA4').value = obj.A4mD; 
+						    document.getElementById('idtxSetMaxDA4').value = obj.A4xD; 
+							
+						    document.getElementById('idminPosA4').value = obj.A4mP; 
+						    document.getElementById('idzeroPosA4').value = obj.A4zP; 
+						    document.getElementById('idmaxPosA4').value = obj.A4xP; 
+						    document.getElementById('idminDegA4').value = obj.A4mD; 
+						    document.getElementById('idmaxDegA4').value = obj.A4xD; 
+                        };
+                        if (obj.hasOwnProperty("A5mP")) {
+						    document.getElementById('idtxSetLowA5').value = obj.A5mP; 
+						    document.getElementById('idtxSetZeroA5').value = obj.A5zP; 
+						    document.getElementById('idtxSetMaxA5').value = obj.A5xP; 
+						    document.getElementById('idtxSetLowDA5').value = obj.A5mD; 
+						    document.getElementById('idtxSetMaxDA5').value = obj.A5xD; 
+							
+						    document.getElementById('idminPosA5').value = obj.A5mP; 
+						    document.getElementById('idzeroPosA5').value = obj.A5zP; 
+						    document.getElementById('idmaxPosA5').value = obj.A5xP; 
+						    document.getElementById('idminDegA5').value = obj.A5mD; 
+						    document.getElementById('idmaxDegA5').value = obj.A5xD; 
+                        };
+                        if (obj.hasOwnProperty("A6mP")) {
+						    document.getElementById('idtxSetLowA6').value = obj.A6mP; 
+						    document.getElementById('idtxSetZeroA6').value = obj.A6zP; 
+						    document.getElementById('idtxSetMaxA6').value = obj.A6xP; 
+						    document.getElementById('idtxSetLowDA6').value = obj.A6mD; 
+						    document.getElementById('idtxSetMaxDA6').value = obj.A6xD; 
+							
+						    document.getElementById('idminPosA6').value = obj.A6mP; 
+						    document.getElementById('idzeroPosA6').value = obj.A6zP; 
+						    document.getElementById('idmaxPosA6').value = obj.A6xP; 
+						    document.getElementById('idminDegA6').value = obj.A6mD; 
+						    document.getElementById('idmaxDegA6').value = obj.A6xD; 
+                        };
+                        if (obj.hasOwnProperty("A1V")) {
+						    document.getElementById('idactPosA1').value = obj.A1V; 
+                document.getElementById('idtxSetActA1').value = obj.A1V; 
+                        };
+                        if (obj.hasOwnProperty("A2V")) {
+						    document.getElementById('idactPosA2').value = obj.A2V; 
+                document.getElementById('idtxSetActA2').value = obj.A2V; 
+                        };
+                        if (obj.hasOwnProperty("A3V")) {
+						    document.getElementById('idactPosA3').value = obj.A3V; 
+                document.getElementById('idtxSetActA3').value = obj.A3V; 
+                        };
+                        if (obj.hasOwnProperty("A4V")) {
+						    document.getElementById('idactPosA4').value = obj.A4V; 
+                document.getElementById('idtxSetActA4').value = obj.A4V; 
+                        };
+                        if (obj.hasOwnProperty("A5V")) {
+						    document.getElementById('idactPosA5').value = obj.A5V; 
+                document.getElementById('idtxSetActA5').value = obj.A5V; 
+                        };
+                        if (obj.hasOwnProperty("A6V")) {
+						    document.getElementById('idactPosA6').value = obj.A6V; 
+                document.getElementById('idtxSetActA6').value = obj.A6V; 
+                        };
+                };
+            };
+ //       };			
+	//===============================================================	
+    function ftoggleid(idname1,idname2,v,rv ){
+        if( v!=rv || v==0 ){
+          v = rv;
+          document.getElementById(idname1).style.background='lightgreen';
+          document.getElementById(idname2).style.background='lightgray';
+        }else{
+          v = 0;
+          document.getElementById(idname1).style.background='lightgray';
+          document.getElementById(idname2).style.background='lightgray';}
+    return v;}
+	//===============================================================	
+    function fJogA1p() {viA1 = ftoggleid('idbtJogA1p','idbtJogA1m',viA1,1);
+                           fIncbt(1,1);
+   	   document.getElementById('idtxSetActA1').value = document.getElementById('idtxSetActA1').value - (-1) ; 
+   	   document.getElementById('idactPosA1').value = document.getElementById('idactPosA1').value - (-1) ; 
+   }
+	//===============================================================	
+    function fJogA1m() {viA1 = ftoggleid('idbtJogA1m','idbtJogA1p',viA1,-1);
+                           fIncbt(1,-1);
+   	   document.getElementById('idtxSetActA1').value = document.getElementById('idtxSetActA1').value - (1) ; 
+   	   document.getElementById('idactPosA1').value = document.getElementById('idactPosA1').value - (1) ; 
+    }
+	//===============================================================	
+    function fJogA2p() {viA2 = ftoggleid('idbtJogA2p','idbtJogA2m',viA2,1);
+                           fIncbt(2,1);
+   	   document.getElementById('idtxSetActA2').value = document.getElementById('idtxSetActA2').value - (-1) ; 
+   	   document.getElementById('idactPosA2').value = document.getElementById('idactPosA2').value - (-1) ; 
+    }
+	//===============================================================	
+    function fJogA2m() {viA2 = ftoggleid('idbtJogA2m','idbtJogA2p',viA2,-1);
+                           fIncbt(2,-1);
+   	   document.getElementById('idtxSetActA2').value = document.getElementById('idtxSetActA2').value - (1) ; 
+   	   document.getElementById('idactPosA2').value = document.getElementById('idactPosA2').value - (1) ; 
+    }
+	//===============================================================	
+    function fJogA3p() {viA3 = ftoggleid('idbtJogA3p','idbtJogA3m',viA3,1);
+                           fIncbt(3,1);
+   	   document.getElementById('idtxSetActA3').value = document.getElementById('idtxSetActA3').value - (-1) ; 
+   	   document.getElementById('idactPosA3').value = document.getElementById('idactPosA3').value - (-1) ; 
+    }
+	//===============================================================	
+    function fJogA3m() {viA3 = ftoggleid('idbtJogA3m','idbtJogA3p',viA3,-1);
+                           fIncbt(3,-1);
+   	   document.getElementById('idtxSetActA3').value = document.getElementById('idtxSetActA3').value - (1) ; 
+   	   document.getElementById('idactPosA3').value = document.getElementById('idactPosA3').value - (1) ; 
+    }
+	//===============================================================	
+    function fJogA4p() {viA4 = ftoggleid('idbtJogA4p','idbtJogA4m',viA4,1);
+                           fIncbt(4,1);
+   	   document.getElementById('idtxSetActA4').value = document.getElementById('idtxSetActA4').value - (-1) ; 
+   	   document.getElementById('idactPosA4').value = document.getElementById('idactPosA4').value - (-1) ; 
+    }
+	//===============================================================	
+    function fJogA4m() {viA4 = ftoggleid('idbtJogA4m','idbtJogA4p',viA4,-1);
+                           fIncbt(4,-1);
+   	   document.getElementById('idtxSetActA4').value = document.getElementById('idtxSetActA4').value - (1) ; 
+   	   document.getElementById('idactPosA4').value = document.getElementById('idactPosA4').value - (1) ; 
+    }
+	//===============================================================	
+    function fJogA5p() {viA5 = ftoggleid('idbtJogA5p','idbtJogA5m',viA5,1);
+                           fIncbt(5,1);
+   	   document.getElementById('idtxSetActA5').value = document.getElementById('idtxSetActA5').value - (-1) ; 
+   	   document.getElementById('idactPosA5').value = document.getElementById('idactPosA5').value - (-1) ; 
+    }
+	//===============================================================	
+    function fJogA5m() {viA5 = ftoggleid('idbtJogA5m','idbtJogA5p',viA5,-1);
+                           fIncbt(5,-1);
+   	   document.getElementById('idtxSetActA5').value = document.getElementById('idtxSetActA5').value - (1) ; 
+   	   document.getElementById('idactPosA5').value = document.getElementById('idactPosA5').value - (1) ; 
+    }
+	//===============================================================	
+    function fJogA6p() {viA6 = ftoggleid('idbtJogA6p','idbtJogA6m',viA6,1);
+                           fIncbt(6,1);
+   	   document.getElementById('idtxSetActA6').value = document.getElementById('idtxSetActA6').value - (-1) ; 
+   	   document.getElementById('idactPosA6').value = document.getElementById('idactPosA6').value - (-1) ; 
+    }
+	//===============================================================	
+    function fJogA6m() {viA6 = ftoggleid('idbtJogA6m','idbtJogA6p',viA6,-1);
+                           fIncbt(6,-1);
+   	   document.getElementById('idtxSetActA6').value = document.getElementById('idtxSetActA6').value - (1) ; 
+   	   document.getElementById('idactPosA6').value = document.getElementById('idactPosA6').value - (1) ; 
+    }
+	//===============================================================	
+		function fsendWebS(cmd){
+				cmds= JSON.stringify(cmd);
+				console.log(cmds);
+       			Socket.send(cmds);
+//				console.log("send: " + cmds);
+		}
+	//===============================================================	
+    function floadDef() {
+			var SetRob = {Newd:1,LoadDef:1};
+			fsendWebS(SetRob);
+    }
+	//===============================================================	
+    function fSaveNew() {
+			var SetRob = {Newd:1,SaveNew:1};
+			fsendWebS(SetRob);
+    }
+	//===============================================================	
+    function floadAct(axis) {
+			var SetRob = {Newd:1,vcal:axis,LoadAct:1};
+			fsendWebS(SetRob);
+    }
+	//===============================================================	
+	function fCalExit() {
+			var SetRob = {Newd:1,vcal:0};
+			fsendWebS(SetRob);
+    }
+	//===============================================================	
+    function fIncbt(axis,inc1){
+			var SetRob = {Newd:1,vcal:axis,vinc:inc1};
+			fsendWebS(SetRob);
+    }
+	//===============================================================	
+    function fMoveSta() {
+			var SetRob = {Newd:1,vCal:1};
+			fsendWebS(SetRob);
+    }
+	//===============================================================	
+    function fsetLowA(axis,value) {
+			var SetRob = {Newd:1,vcal:axis,LowA:value};
+			fsendWebS(SetRob);
+	}
+	//===============================================================	
+    function fsetLowDA(axis,value) {
+			var SetRob = {Newd:1,vcal:axis,LowDA:value};
+			fsendWebS(SetRob);
+	}
+	//===============================================================	
+    function fsetZeroA(axis,value) {
+			var SetRob = {Newd:1,vcal:axis,ZeroA:value};
+			fsendWebS(SetRob);
+	}
+	//===============================================================	
+    function fsetMaxA(axis,value) {
+			var SetRob = {Newd:1,vcal:axis,MaxA:value};
+			fsendWebS(SetRob);
+	}
+	//===============================================================	
+    function fsetMaxDA(axis,value) {
+			var SetRob = {Newd:1,vcal:axis,MaxDA:value};
+			fsendWebS(SetRob);
+	}
+	//===============================================================	
+    function fsetActA(axis,value) {
+			var SetRob = {Newd:1,vcal:axis,ActA:value};
+			fsendWebS(SetRob);
+	}
+	//===============================================================	
+    function fsetRobNo(value) {
+			var SetRob = {Newd:1,rname:value};
+			fsendWebS(SetRob);
+	}
+	//===============================================================	
+  </script>
+  </body></html>

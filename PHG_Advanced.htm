@@ -1,0 +1,327 @@
+    <!DOCTYPE html><head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+    .PHG_display {
+        width: 100%;
+        height: 20%;
+    }
+    .PHG_Control {
+        width: 100%;
+        height: 80%;
+     /*     position: absolute; 
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          text-align: center;   */    
+    }
+    /* If you want the content centered horizontally and vertically */
+    .centered {
+    /*      position: absolute;*/
+          top: 50%;
+          left: 50%;
+    /*      transform: translate(-50%, -50%);*/
+          text-align: center;
+    }
+    </style>
+    </head>
+    <body><title>PHG Advanced</title>
+    <div class='PHG_display'>
+    <div >  
+   	   <p id="demo"></p>
+
+    </div></div>
+  <div class='PHG_Control'> 
+    <div class='left'>  
+    <table>
+    <tr>
+      <th> WORLD[xyz,abGr]<BR>AXIS[A1-A3,T4-T6]</th>
+      <th colspan='1'> MODE </th><th colspan='2'> PROGRAM </th></tr>
+    <tr><td>
+      <br><br>
+      <input id='idtxSetA1' type='text'  size='5' value='0'>
+      <output id='idminA1' name='MinA1' >-90</output>
+      <input id='idslSetA1' type='range' min='-90' max='90' value='0'  oninput='fSetA1()'>
+      <output id='idmaxA1' name='MaxA1' >90</output>
+      <input id='idbtJogA1m' type='button' value='A1 -' onmousedown='fJogA1m()'>
+      <input id='idbtJogA1p' type='button' value='+ A1' onclick='fJogA1p()'>
+      <br><br>
+      <input id='idtxSetA2' type='text'  size='5' value='90'>
+      <output id='idminA2' name='MinA2' >-90</output>
+      <input id='idslSetA2' type='range' min='-90' max='90' value='90'  oninput='fSetA2()'>
+      <output id='idmaxA2' name='MaxA2' >90</output>
+      <input id='idbtJogA2m' type='button' value='A2 -' onmousedown='fJogA2m()'>
+      <input id='idbtJogA2p' type='button' value='+ A2' onmousedown='fJogA2p()'>
+      <br><br>
+      <input id='idtxSetA3' type='text'  size='5' value='90'>
+      <output id='idminA3' name='MinA3' >-90</output>
+      <input id='idslSetA3' type='range' min='-90' max='90' value='90' oninput='fSetA3()'>
+      <output id='idmaxA3' name='MaxA3' >90</output>
+      <input id='idbtJogA3m' type='button' value='A3 -' onmousedown='fJogA3m()'>
+      <input id='idbtJogA3p' type='button' value='+ A3' onmousedown='fJogA3p()'>
+      <br><br>
+      <input id='idtxSetA4' type='text'  size='5' value='0'>
+      <output id='idminA4' name='MinA4' >-90</output>
+      <input id='idslSetA4' type='range' min='-90' max='90' value='0' oninput='fSetA4()'>
+      <output id='idmaxA4' name='MaxA4' >90</output>
+      <input id='idbtJogA4m' type='button' value='A4 -' onmousedown='fJogA4m()'>
+      <input id='idbtJogA4p' type='button' value='+ A4' onmousedown='fJogA4p()'>
+      <br><br>
+      <input id='idtxSetA5' type='text'  size='5' value='0'>
+      <output id='idminA5' name='MinA5' >-90</output>
+      <input id='idslSetA5' type='range' min='-90' max='90' value='0' oninput='fSetA5()'>
+      <output id='idmaxA5' name='MaxA5' >90</output>
+      <input id='idbtJogA5m' type='button' value='A5 -' onmousedown='fJogA5m()'>
+      <input id='idbtJogA5p' type='button' value='+ A5' onmousedown='fJogA5p()'>
+      <br><br>
+      <input id='idtxSetA6' type='text'  size='5' value='0'>
+      <output id='idminA6' name='MinA6' >-10</output>
+      <input id='idslSetA6' type='range' min='-10' max='60' value='0' oninput='fSetA6()'>
+      <output id='idmaxA6' name='MaxA6' >60</output>
+      <input id='idbtJogA6m' type='button' value='A6 -' onmousedown='fJogA6m()'>
+      <input id='idbtJogA6p' type='button' value='+ A6' onmousedown='fJogA6p()'>
+      <br><br>
+      <input id='idtxSetVel' type='text'  size='5' value='100'>
+      <input type='range' min='0' max='600' value='0' id='idslSetVel' oninput='fSetVel()'>
+      <br><br>
+      <input id='idbtMove' type='button' value='MOVE' onmousedown='fMoveSta()' onmouseup='fMoveStp()'>
+      <input id='idbtHalt' type='button' value='STOP' onmousedown='fHaltSta()' >
+      <input id='idbtHome' type='button' value='Go Home' onmousedown='fMoveHome()' >
+      <br><br>
+      </td><td>
+      <input id='idbtJoint' type='button'  value='JOINT' onmousedown='fJoint()'>
+      <input id='idbtWorld' type='button' value='WORLD' onmousedown='fWorld()'>
+      <br><br>
+      <input id='idbtAbs' type='button'  value='ABST' onmousedown='fAbs()'>
+      <input id='idbtRel' type='button' value='RELT' onmousedown='fRel()'>
+      <br><br>
+      <input id='idbtStep' type='button' value='.STEP.' onmousedown='fStep()'>
+      <input id='idbtCont' type='button' value='.CONT.' onmousedown='fCont()'>
+      <br><br>
+      </td></tr></table>
+  </div></div>
+   <div>V36</div>
+    <script>
+//	    <div class='centered'>  
+//       <textarea id="rxPHGDisp">No data</textarea>
+
+    var Socket;
+    var viA1,viA2,viA3,viA4,viA5,viA6,viMode,viMoti,viStep,viVel,
+        viJ1,viJ2,viJ3,viJ4,viJ5,viJ6   ;
+   
+    function fSReset(idname1,idname2,v,rv ){
+        if ( v!=rv ){
+          v = rv;
+          document.getElementById(idname1).style.background='lightgreen';
+          document.getElementById(idname2).style.background  ='lightgray';}
+    return v;}
+    function fSetA1(){viJ1 = fSetSlide('idtxSetA1','idslSetA1');
+                    if (viStep == 2){ fMoveSta() ;}}
+    function fSetA2(){viJ2 = fSetSlide('idtxSetA2','idslSetA2');
+                    if (viStep == 2){ fMoveSta() ;}}
+    function fSetA3(){viJ3 = fSetSlide('idtxSetA3','idslSetA3');
+                    if (viStep == 2){ fMoveSta() ;}}
+    function fSetA4(){viJ4 = fSetSlide('idtxSetA4','idslSetA4');
+                    if (viStep == 2){ fMoveSta() ;}}
+    function fSetA5(){viJ5 = fSetSlide('idtxSetA5','idslSetA5');
+                    if (viStep == 2){ fMoveSta() ;}}
+    function fSetA6(){viJ6 = fSetSlide('idtxSetA6','idslSetA6');
+                    if (viStep == 2){ fMoveSta() ;}}
+    function fSetVel(){viVel = fSetSlide('idtxSetVel','idslSetVel');
+                    if (viStep == 2){ fMoveSta() ;}}
+    
+    function fIncbt(idname1,inc1){
+          var value = parseInt(document.getElementById(idname1).value, 10);
+            value = isNaN(value) ? 0 : value;
+            value = value + inc1;
+                      document.getElementById(idname1).value = value;
+            if (viStep == 2){ fMoveSta() ;}
+           
+    }
+    function fSetSlide(idname1,idname2){
+                document.getElementById(idname1).value = document.getElementById(idname2).value;
+                return document.getElementById(idname1).value;
+    }
+    function ftoggleid(idname1,idname2,v,rv ){
+        if( v!=rv || v==0 ){
+          v = rv;
+          document.getElementById(idname1).style.background='lightgreen';
+          document.getElementById(idname2).style.background='lightgray';
+        }else{
+          v = 0;
+          document.getElementById(idname1).style.background='lightgray';
+          document.getElementById(idname2).style.background='lightgray';}
+    return v;}
+    function fJogA1p() {viA1 = ftoggleid('idbtJogA1p','idbtJogA1m',viA1,1);
+                           fIncbt('idslSetA1',1);
+                   fSetA1();                   }
+    function fJogA1m() {viA1 = ftoggleid('idbtJogA1m','idbtJogA1p',viA1,-1);
+                           fIncbt('idslSetA1',-1);
+                   fSetA1();                   }
+    function fJogA2p() {viA2 = ftoggleid('idbtJogA2p','idbtJogA2m',viA2,1);
+                           fIncbt('idslSetA2',1);
+                   fSetA2();                   }
+    function fJogA2m() {viA2 = ftoggleid('idbtJogA2m','idbtJogA2p',viA2,-1);
+                           fIncbt('idslSetA2',-1);
+                   fSetA2();                   }
+    function fJogA3p() {viA3 = ftoggleid('idbtJogA3p','idbtJogA3m',viA3,1);
+                           fIncbt('idslSetA3',1);
+                   fSetA3();                   }
+    function fJogA3m() {viA3 = ftoggleid('idbtJogA3m','idbtJogA3p',viA3,-1);
+                           fIncbt('idslSetA3',-1);
+                   fSetA3();                   }
+    function fJogA4p() {viA4 = ftoggleid('idbtJogA4p','idbtJogA4m',viA4,1);
+                           fIncbt('idslSetA4',1);
+                   fSetA4();                   }
+    function fJogA4m() {viA4 = ftoggleid('idbtJogA4m','idbtJogA4p',viA4,-1);
+                           fIncbt('idslSetA4',-1);
+                   fSetA4();                   }
+    function fJogA5p() {viA5 = ftoggleid('idbtJogA5p','idbtJogA5m',viA5,1);
+                           fIncbt('idslSetA5',1);
+                   fSetA5();                   }
+    function fJogA5m() {viA5 = ftoggleid('idbtJogA5m','idbtJogA5p',viA5,-1);
+                           fIncbt('idslSetA5',-1);
+                   fSetA5();                   }
+    function fJogA6p() {viA6 = ftoggleid('idbtJogA6p','idbtJogA6m',viA6,1);
+                           fIncbt('idslSetA6',1);
+                   fSetA6();                   }
+    function fJogA6m() {viA6 = ftoggleid('idbtJogA6m','idbtJogA6p',viA6,-1);
+                           fIncbt('idslSetA6',-1);
+                   fSetA6();                   }
+                   
+    function fJoint() {viMode = fSReset('idbtJoint','idbtWorld',viMode,1);
+						// include hide A1-A6 Jog mode and show x,y,z,a,b,g sliders
+						 document.getElementById("idslSetA1").setAttribute("min", -90);
+						 document.getElementById("idslSetA1").setAttribute("max", 90);
+						 document.getElementById("idslSetA2").setAttribute("min", -90);
+						 document.getElementById("idslSetA2").setAttribute("max", 90);
+						 document.getElementById("idslSetA3").setAttribute("min", -90);
+						 document.getElementById("idslSetA3").setAttribute("max", 90);
+						 document.getElementById("idslSetA4").setAttribute("min", -90);
+						 document.getElementById("idslSetA4").setAttribute("max", 90);
+						 document.getElementById("idslSetA5").setAttribute("min", -90);
+						 document.getElementById("idslSetA5").setAttribute("max", 90);
+						 document.getElementById("idslSetA6").setAttribute("min", -10);
+						 document.getElementById("idslSetA6").setAttribute("max", 60);
+						 
+						 document.getElementById("idminA1").value = -90;
+						 document.getElementById("idminA2").value = -90;
+						 document.getElementById("idminA3").value = -90;
+						 document.getElementById("idminA4").value = -90;
+						 document.getElementById("idminA5").value = -90;
+						 document.getElementById("idminA6").value = -10;
+						 
+						 document.getElementById("idmaxA1").value = 90;
+						 document.getElementById("idmaxA2").value = 90;
+						 document.getElementById("idmaxA3").value = 90;
+						 document.getElementById("idmaxA4").value = 90;
+						 document.getElementById("idmaxA5").value = 90;
+						 document.getElementById("idmaxA6").value = 60;						 
+			  }
+    function fWorld() {viMode = fSReset('idbtWorld','idbtJoint',viMode,2);
+						// inlclude hide x,y,z,a,b,g and show a1-a6 sliders
+						 document.getElementById("idslSetA1").setAttribute("min", -300);
+						 document.getElementById("idslSetA1").setAttribute("max", 300);
+						 document.getElementById("idslSetA2").setAttribute("min", -300);
+						 document.getElementById("idslSetA2").setAttribute("max", 300);
+						 document.getElementById("idslSetA3").setAttribute("min", -300);
+						 document.getElementById("idslSetA3").setAttribute("max", 300);
+						 document.getElementById("idslSetA4").setAttribute("min", -300);
+						 document.getElementById("idslSetA4").setAttribute("max", 300);
+						 document.getElementById("idslSetA5").setAttribute("min", -90);
+						 document.getElementById("idslSetA5").setAttribute("max", 90);
+						 document.getElementById("idslSetA6").setAttribute("min", -10);
+						 document.getElementById("idslSetA6").setAttribute("max", 60);
+
+						 document.getElementById("idminA1").value = -300;
+						 document.getElementById("idminA2").value = -300;
+						 document.getElementById("idminA3").value = -300;
+						 document.getElementById("idminA4").value = -300;
+						 document.getElementById("idminA5").value = -10;
+						 document.getElementById("idminA6").value = -10;
+
+						 document.getElementById("idmaxA1").value = 300;
+						 document.getElementById("idmaxA2").value = 300;
+						 document.getElementById("idmaxA3").value = 300;
+						 document.getElementById("idmaxA4").value = 300;
+						 document.getElementById("idmaxA5").value = 90;
+						 document.getElementById("idmaxA6").value = 60;						 
+			  }
+    function fAbs() {viMoti = fSReset('idbtAbs','idbtRel',viMoti,1); }
+    function fRel() {viMoti = fSReset('idbtRel','idbtAbs',viMoti,2); }
+    function fStep() {viStep = fSReset('idbtStep','idbtCont',viStep,1); }
+    function fCont() {viStep = fSReset('idbtCont','idbtStep',viStep,2); }
+    function Init1(){
+		document.getElementById("demo").innerHTML = "Cordenate : X = " +0 + ", Y= " + 0 + ", Z= "+ 0 ; 
+		
+        Socket = new WebSocket('ws://192.168.4.1:81/');
+        Socket.onmessage = function(event) {
+                   if (typeof (event.data) === 'string' ){
+                    //create a JSON object
+                    var IstRobstr = event.data;
+                    //var IstRob = JSON.parse(IstRobstr);
+       // document.getElementById("rxPHGDisp").value = IstRobstr;
+					var obj = JSON.parse(IstRobstr , function (key, value) {
+					if (key == "Event") {
+					return new Date(value);
+					} else {
+					return value;
+					}
+					});
+					document.getElementById("demo").innerHTML = "Cordenate : X = " + obj.x + ", Y= " + obj.y + ", Z= "+ obj.z ; 
+
+        }}}
+        window.onload = Init1();
+
+    function fMoveHome() {
+		//	document.getElementById('idbtHome').style.background='lightgreen';
+		//  document.getElementById('idbtMove').style.background='lightgray';
+			var SetRob = {Newd:1,GoHome:1,Halt:0};
+			var jsonSetRob = JSON.stringify(SetRob);
+			console.log(jsonSetRob);		   
+        Socket.send(jsonSetRob);
+        }
+    function fHaltSta() {
+			document.getElementById('idbtHalt').style.background='lightgreen';
+			document.getElementById('idbtMove').style.background='lightgray';
+		if (viMode == 1 ){	
+			var SetRobJC = {Newd:1,Mod:viMode,J1:viJ1,J2:viJ2,J3:viJ3,J4:viJ4,J5:viJ5,J6:viJ6,Speed:viVel,Halt:1};
+			var jsonSetRob = JSON.stringify(SetRobJC);
+		}
+		if (viMode == 2 ){	
+			var SetRobWC = {Newd:1,Mod:viMode,X:viJ1,Y:viJ2,Z:viJ3,Rx:viJ4,J5:viJ5,J6:viJ6,Speed:viVel,Halt:1};
+			var jsonSetRob = JSON.stringify(SetRobWC);
+		}
+			console.log(jsonSetRob);		   
+        Socket.send(jsonSetRob);
+        }
+    function fMoveSta() {
+			document.getElementById('idbtMove').style.background='lightgreen';
+			document.getElementById('idbtHalt').style.background='lightgray';
+ 		if (viMode == 1 ){	
+			var SetRobJC = {Newd:1,Mod:viMode,J1:viJ1,J2:viJ2,J3:viJ3,J4:viJ4,J5:viJ5,J6:viJ6,Speed:viVel,Halt:0};
+			var jsonSetRob = JSON.stringify(SetRobJC);
+		}
+		if (viMode == 2 ){	
+			var SetRobWC = {Newd:1,Mod:viMode,X:viJ1,Y:viJ2,Z:viJ3,Rx:viJ4,J5:viJ5,J6:viJ6,Speed:viVel,Halt:0};
+			var jsonSetRob = JSON.stringify(SetRobWC);
+		}
+			console.log(jsonSetRob);		   
+        Socket.send(jsonSetRob);
+        }
+    function fMoveStp() {
+			document.getElementById('idbtMove').style.background='lightgray';
+			document.getElementById('idbtHalt').style.background='lightgreen';
+		if (viMode == 1 ){	
+			var SetRobJC = {Newd:1,Mod:viMode,J1:viJ1,J2:viJ2,J3:viJ3,J4:viJ4,J5:viJ5,J6:viJ6,Speed:viVel,Halt:1};
+			var jsonSetRob = JSON.stringify(SetRobJC);
+		}
+		if (viMode == 2 ){	
+			var SetRobWC = {Newd:1,Mod:viMode,X:viJ1,Y:viJ2,Z:viJ3,Rx:viJ4,J5:viJ5,J6:viJ6,Speed:viVel,Halt:1};
+			var jsonSetRob = JSON.stringify(SetRobWC);
+		}
+			console.log(jsonSetRob);		   
+        Socket.send(jsonSetRob);
+        }
+  </script>
+  </body></html>

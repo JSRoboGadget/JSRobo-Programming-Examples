@@ -1,0 +1,376 @@
+<!DOCTYPE HTML>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=3.0">
+    <title>PHG JoyStick</title>
+    <style>
+        @media only screen and (orientation:portrait) {
+            body {
+                margin: 0px;
+                padding: 0px;
+                height: 100vw;
+                transform: rotate(90deg);
+            }
+        }
+        
+        #joystick {
+            border: 1px solid #9C9898;
+        }
+    </style>
+    <script type="text/javascript">
+        var JoyStick = (
+            function(container, sMode, fx, sfx, lx, fy, sfy, ly, minX, maxX, maxY, minY, width, height, size, internalStrokeColor, internalFillColor, internalLineWidth) {
+                var title = (undefined === title ? 'joystick' : title),
+                    fx = (undefined === fx ? 0 : fx),
+                    fy = (undefined === fy ? 0 : fy),
+                    width = (undefined === width ? 0 : width),
+                    height = (undefined === height ? 0 : height),
+                    size = (undefined === size ? 0 : size),
+                    internalStrokeColor = (undefined === internalStrokeColor ? '#3333FF' : internalStrokeColor),
+                    internalFillColor = (undefined === internalFillColor ? '#0000FF' : internalFillColor),
+                    internalLineWidth = (undefined === internalLineWidth ? 2 : internalLineWidth);
+
+                var objContainer = document.getElementById(container);
+                var canvas = document.createElement('canvas');
+                canvas.id = title;
+                if (width == 0) width = objContainer.clientWidth;
+                if (height == 0) height = objContainer.clientHeight;
+                canvas.width = width;
+                canvas.height = height;
+                objContainer.appendChild(canvas);
+                var context = canvas.getContext('2d');
+                var vX, vY;
+                var pressed = 0; // Bool - 1=Yes - 0=No
+                var circumference = 2 * Math.PI;
+                var internalRadius = (canvas.width - ((50 * 2) + 10)) / 2;
+                var maxMoveStick = 90;
+                var centerX = canvas.width / 2;
+                var centerY = canvas.height / 2;
+                var movedX = centerX;
+                var movedY = centerY;
+				var yobs , xob ;
+
+                canvas.addEventListener('touchstart', onTouchStart, false);
+                canvas.addEventListener('touchmove', onTouchMove, false);
+                canvas.addEventListener('touchend', onTouchEnd, false);
+                canvas.addEventListener('mousedown', onMouseDown, false);
+                canvas.addEventListener('mousemove', onMouseMove, false);
+                canvas.addEventListener('mouseup', onMouseUp, false);
+                canvas.addEventListener('mouseenter', onMouseUp, false);
+                canvas.addEventListener('mouseleave', onMouseUp, false);
+
+
+                var shwX = minX + (maxX - minX) * movedX / (width);
+                var shwY = (minY + (maxY - minY) * (movedY) / (height - slmarg * 2));
+                var vX = minX + (maxX - minX) * movedX / (width - slmarg * 2);
+                var vY = (minY + (maxY - minY) * (movedY) / (height - slmarg * 2));
+                var slmarg = size;
+
+                drawInternal(centerX, centerY);
+
+                function drawInternal() {
+                    context.beginPath();
+                    if (movedX < (slmarg)) {
+                        movedX = slmarg;
+                    }
+                    if (movedY < (slmarg)) {
+                        movedY = slmarg;
+                    }
+                    if (movedX > (width - slmarg)) {
+                        movedX = width - slmarg;
+                    }
+                    if (movedY > (height - slmarg)) {
+                        movedY = height - slmarg;
+                    }
+                    shwX = minX + (maxX - minX) * (movedX - slmarg) / (width - slmarg * 2);
+                    shwY = (minY + (maxY - minY) * (movedY - slmarg) / (height - slmarg * 2));
+
+                    if (fx == 1) {
+                        movedX = centerX;
+                    }
+                    if (fy == 1) {
+                        movedY = centerY;
+                    }
+                    context.arc(movedX, movedY, size, 0, circumference, false);
+                    var grd = context.createRadialGradient(centerX, centerY, 5, centerX, centerY, 50);
+                    grd.addColorStop(0, internalStrokeColor);
+                    grd.addColorStop(1, internalStrokeColor);
+                    context.fillStyle = grd;
+                    context.fill();
+                    context.lineWidth = internalLineWidth;
+                    context.strokeStyle = internalStrokeColor;
+                    context.stroke();
+                    context.beginPath();
+                    context.fillStyle = "black";
+                    var wt = "";
+                    var st = "";
+                    if (fx == 0) {
+                        st = sfx;
+                        wt = wt + "X:" + shwX.toFixed(0);
+                    }
+                    if ((fx == 0) && (fy == 0)) {
+                        st = st + ',' + sfy;
+                        wt = wt + "Y:" + shwY.toFixed(0);
+                    } else {
+                        if (fy == 0) {
+                            st = st + sfy;
+                            wt = wt + "Y:" + shwY.toFixed(0);
+                        }
+                    }
+                    context.fillText(st, movedX - 5, movedY);
+                    context.fillText(wt, 2, height);
+                    context.fill();
+                }
+
+                function onTouchStart(event) {
+                    pressed = 1;
+						lx = movedX;
+						ly = movedY;
+                        movedX = event.touches[0].pageX;
+                        movedY = event.touches[0].pageY;
+                        movedX -= canvas.offsetLeft;
+                        movedY -= canvas.offsetTop;
+                        xobs = Math.abs(lx - movedX) ; 
+                        yobs = Math.abs(ly - movedY); 
+                    onTouchMove(event);
+                }
+
+                function onTouchMove(event) {
+                    event.preventDefault();
+                    if (pressed == 1) {
+                        movedX = event.touches[0].pageX - canvas.offsetLeft;
+                        movedY = event.touches[0].pageY - canvas.offsetTop;
+						if (lx > movedX) { movedX = movedX + xobs ; lx = movedX + xobs };
+						if (lx < movedX) { movedX = movedX - xobs ; lx = movedX - xobs };
+						if (ly > movedY) { movedY = movedY + yobs ; ly = movedY + yobs };
+						if (ly < movedY) { movedY = movedY - yobs ; ly = movedY - yobs };
+							
+                        context.clearRect(0, 0, canvas.width, canvas.height);
+                        drawInternal();
+                        fSentWebSokect();
+                    }
+                }
+
+                function onTouchEnd(event) {
+                    pressed = 0;
+                    context.clearRect(0, 0, canvas.width, canvas.height);
+                    drawInternal();
+                }
+
+                function onMouseDown(event) {
+                    pressed = 1;
+						lx = movedX;
+						ly = movedY;
+                        movedX = event.pageX;
+                        movedY = event.pageY;
+                        movedX -= canvas.offsetLeft;
+                        movedY -= canvas.offsetTop;
+                        xobs = Math.abs(lx - movedX) ; 
+                        yobs = Math.abs(ly - movedY); 
+//						console.log("lx = "+ lx , ", ly = " + ly ,"xobs = "+ xobs , ", yobs = " + yobs ); 
+                    onMouseMove(event);
+                }
+
+                function onMouseMove(event) {
+                    if (pressed == 1) {
+                        movedX = event.pageX;
+                        movedY = event.pageY;
+                        movedX -= canvas.offsetLeft;
+                        movedY -= canvas.offsetTop;
+						if (lx > movedX) { movedX = movedX + xobs ; lx = movedX + xobs };
+						if (lx < movedX) { movedX = movedX - xobs ; lx = movedX - xobs };
+						if (ly > movedY) { movedY = movedY + yobs ; ly = movedY + yobs };
+						if (ly < movedY) { movedY = movedY - yobs ; ly = movedY - yobs };
+						
+                        context.clearRect(0, 0, canvas.width, canvas.height);
+                        drawInternal();
+                        fSentWebSokect();
+                    }
+                }
+
+                function onMouseUp(event) {
+                    pressed = 0;
+                    context.clearRect(0, 0, canvas.width, canvas.height);
+                    drawInternal();
+                }
+
+                function fSentWebSokect() {
+                    var SetRob;
+                    SetRob = '{"Newd":1,' + '"Mod":' + sMode + ',"' + sfx + '":' + shwX.toFixed(1) + ',"' + sfy + '":' + shwY.toFixed(1) + ',"Halt":0}';
+//                    SetRob = '{Newd:1,' + 'Mod:' + sMode + ',' + sfx + ':' + shwX.toFixed(1) + ',' + sfy + ':' + shwY.toFixed(1) + ',Halt:0}';
+                    console.log("Send : "+ SetRob);
+                    Socket.send(SetRob);
+//					fsendWebS(SetRob);
+                }
+                this.GetWidth = function() {
+                    return canvas.width;
+                };
+                this.GetHeight = function() {
+                    return canvas.height;
+                };
+                this.GetPosX = function() {
+                    return movedX;
+                };
+                this.GetPosY = function() {
+                    return movedY;
+                };
+                this.GetX = function() {
+                    return shwX.toFixed();
+                };
+                this.GetY = function() {
+                    return shwY.toFixed();
+                };
+                this.SetX = function(x) {
+                    movedX = ((x - minX) * (width - slmarg * 2) / (maxX - minX)) + slmarg;
+//                    console.log(sfx + ": x = " + x + "  moveX = " + movedX + ", minX = " + minX + ", maxX =" + maxX + ", width = " + width + ", slmarg = " + slmarg);
+                    context.clearRect(0, 0, canvas.width, canvas.height);
+                    drawInternal();
+                }
+                this.SetY = function(y) {
+                    movedY = ((y - minY) * (height - slmarg * 2) / (maxY - minY)) + slmarg;
+//                    console.log(sfy + " y = " + y + "  moveY = " + movedY + ", minY = " + minY + ", maxY =" + maxY + ", height = " + height + ", slmarg = " + slmarg);
+                    context.clearRect(0, 0, canvas.width, canvas.height);
+                    drawInternal();
+                }
+            }
+        );
+    </script>
+</head>
+
+<body>
+    <div style=" float:right; ">
+			<a href="./PHG_Settings.html">Settings</a>
+    </div>
+    <div style=" float:left; ">
+        <div id="DivA1" style="margin-left:10px; float:left; "></div>
+        <div id="DivA2" style="margin-left:10px; float:left; "></div>
+        <div id="DivA3" style="margin-left:10px; float:left; "></div>
+        <div id="DivA4" style="margin-left:10px; float:left; "></div>
+    </div>
+    <div style=" float:left; ">
+        <div style="margin-left:10px; float:left; ">
+            <div id="DivRz" style="margin-bottom:10px;"></div>
+            <div id="DivGr" style="margin-bottom::10px;"></div>
+            <div id="DivSpace" style="margin-bottom:60px;"></div>
+            <div id="DivVel" style="margin-bottom:10px;"></div>
+        </div>
+        <div id="DivRx" style="margin-left:10px; float:left; "></div>
+        <div id="DivZ" style="margin-left:10px; float:left; "></div>
+        <div id="DivX" style="margin-left:10px; float:left; "></div>
+        <div id="DivY" style="margin-left:10px; float:left; "></div>
+    </div>
+    <div style=" float:unset ">
+        <input id='idbtHome' type='button' value='Go Home' onmousedown='fMoveHome()'>
+        <input id='idbtReset' type='button' value='Reset' onmousedown='fReset()'>
+    </div>
+
+    <script type="text/javascript">
+	//===============================================================	
+        var Socket;
+	//===============================================================	
+        var viA1, viA2, viA3, viA4, viA5, viA6, viMode, viMoti, viStep, viVel, viX, viY, viZ, viRx,lx,ly;
+	//===============================================================	
+        //   function(container, sMode, fx, sfx, lx, fy, sfy, ly, minX, maxX, maxY, minY, width, height, size, internalStrokeColor, internalFillColor, internalLineWidth) {
+	//===============================================================	
+        var WCx = new JoyStick('DivX', 2, 0, 'X',lx, 1, 'D',ly, -300, 300, 0, 0, 200, 40, 20, '#00FF00', undefined);
+        var WCy = new JoyStick('DivY', 2, 1, 'D',lx, 0, 'Y',ly, 0, 0, 300, 0, 40, 200, 20, '#00FF00', undefined);
+        var WCz = new JoyStick('DivZ', 2, 1, 'D',lx, 0, 'Z',ly, 0, 0, -150, 280, 50, 200, 20, '#8080FF', undefined);
+        var WCrx = new JoyStick('DivRx',2,1,'D',lx,0,'Rx',ly,0,0,-180,180,50,200,20,'#FFFF00',undefined);
+        //==================================================================
+        var JA1 = new JoyStick('DivA1', 1, 1, 'D',lx, 0, 'J1',ly, 0, 0, -90, 90, 40, 200, 20, '#00FF00', undefined);
+        var JA2 = new JoyStick('DivA2', 1, 1, 'D',lx, 0, 'J2',ly, 0, 0, -90, 90, 40, 200, 20, '#00FF00', undefined);
+        var JA3 = new JoyStick('DivA3', 1, 1, 'D',lx, 0, 'J3',ly, 0, 0, -90, 90, 40, 200, 20, '#00FF00', undefined);
+        var JA4 = new JoyStick('DivA4', 1, 1, 'D',lx, 0, 'J4',ly, 0, 0, -90, 90, 40, 200, 20, '#00FF00', undefined);
+        //==================================================================
+        var JA5 = new JoyStick('DivRz', 1, 0, 'J5',lx, 1, 'D',ly, -90, 90, 0, 0, 200, 40, 20, '#00FFFF', undefined);
+        var JA6 = new JoyStick('DivGr', 1, 0, 'J6',lx, 1, 'D',ly, -10, 90, 0, 0, 200, 40, 20, '#F00000', undefined);
+        var Vel = new JoyStick('DivVel', 1, 0, 'Speed',lx, 1, 'D',ly, 0, 600, 0, 0, 200, 40, 20, '#AAAAFF', undefined);
+        //==================================================================
+        viA1 = JA1.GetY();
+        viA2 = JA2.GetY();
+        viA3 = JA3.GetY();
+        viA4 = JA4.GetY();
+        viA5 = JA5.GetX();
+        viA6 = JA6.GetX();
+        viX = WCx.GetX();
+        viY = WCy.GetY();
+        viZ = WCz.GetY();
+        viRx = WCrx.GetY();
+	//===============================================================	
+		function fsendWebS(cmd){
+				cmds= JSON.stringify(cmd);
+				console.log("Send : "+ cmds);
+       			Socket.send(cmds);
+		}
+	//===============================================================	
+        window.onload = Init1();
+	//===============================================================	
+        function Init1() {
+//            Socket = new WebSocket('ws://' + window.location.hostname + ':81/');
+            Socket = new WebSocket('ws://192.168.4.1:81/');
+				Socket.onmessage = function(event) {
+                //create a JSON object
+                var IstRobstr = event.data;
+                console.log("Receive: " + event.data);
+                var obj = JSON.parse(IstRobstr);
+                if (obj.hasOwnProperty("Cord")) {;
+//                    if (obj.Cord == 1 || obj.inPos == true) {
+//                    if (obj.Cord == 1 ) {
+                        if (obj.hasOwnProperty("x")) {
+                            WCx.SetX(obj.x)
+                        };
+                        if (obj.hasOwnProperty("y")) {
+                            WCy.SetY(obj.y)
+                        };
+                        if (obj.hasOwnProperty("z")) {
+                            WCz.SetY(obj.z)
+                        };
+                        if (obj.hasOwnProperty("a")) {
+                            WCrx.SetY(obj.a)
+                        };
+//                    }
+//                    if (obj.Cord == 2 || obj.inPos == true) {
+//                    if (obj.Cord == 2 ) {
+                        if (obj.hasOwnProperty("j1")) {
+                            JA1.SetY(obj.j1)
+                        };
+                        if (obj.hasOwnProperty("j2")) {
+                            JA2.SetY(obj.j2)
+                        };
+                        if (obj.hasOwnProperty("j3")) {
+                            JA3.SetY(obj.j3)
+                        };
+                        if (obj.hasOwnProperty("j4")) {
+                            JA4.SetY(obj.j4)
+                        };
+ //                   }
+                    if (obj.hasOwnProperty("j5")) {
+                        JA5.SetX(obj.j5)
+                    };
+                    if (obj.hasOwnProperty("j6")) {
+                        JA6.SetX(obj.j6)
+                    };
+                    if (obj.hasOwnProperty("vel")) {
+                        Vel.SetX(obj.vel)
+                    };
+                }
+                    if (obj.hasOwnProperty("Connected")) {
+                        fMoveHome();
+                    };
+            }
+        }
+	//===============================================================	
+        function fMoveHome() {
+            var SetRob = {Newd:1, GoHome:1, Halt:0};
+			fsendWebS(SetRob);
+        }
+	//===============================================================	
+        function fReset() {
+            var SetRob = {Newd:1, Reset:1, Halt:0};
+			fsendWebS(SetRob);
+        }
+	//===============================================================	
+    </script>
+</body>
+</html> 
